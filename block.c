@@ -1,12 +1,9 @@
 #include "block.h"
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
 
 const int I_MINO[4][4] = \
-  {{0,0,0,0},                                   \
-   {0,0,0,0},                                   \
-   {1,1,1,1},                                   \
+  {{0,0,0,0},\
+   {0,0,0,0},\
+   {1,1,1,1},\
    {0,0,0,0}};
 const int J_MINO[4][4] = \
   {{0,0,0,0},\
@@ -50,6 +47,15 @@ void SetMino(GROUP *group){
   memcpy(group -> block[6].shape , O_MINO, sizeof(group -> block[6].shape));
 }
 
+void ShuffleOrder (int order[7]){
+  int i,a,b,cache;
+  for(i = 0;i < SHUFFLE_NUM;i++){
+    cache = order[a = rand() % 7];
+    order[a] = order[b = rand()%7];
+    order[b] = cache;
+  }
+}
+
 void PrintMino(int mino[4][4]){
   int i,j;
   for(i = 0;i < 4;i++){
@@ -61,3 +67,4 @@ void PrintMino(int mino[4][4]){
   }
 }
   
+
