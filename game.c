@@ -47,6 +47,8 @@ void setup (GROUP *group,FIELD *field,bool debug_flag){
   srand((unsigned)time(NULL));
 }
 
+/* ゲームのメインループ
+ * ここを1ループすると、1ミノのアクションが終了する */
 int game_loop(GROUP *group, FIELD *field){
   if(drop_mino(group, field)) return 0;
   // Manipulate_mino();
