@@ -1,6 +1,6 @@
 #include "game.h"
 
-void setup (GROUP *group,FIELD *field,bool debug_flag){
+void setup (GROUP *group,FIELD *field,BOOL debug_flag){
   int i,j;
   SetMino(group);
   group -> order_selecter = 0;

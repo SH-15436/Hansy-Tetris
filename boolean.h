@@ -1,9 +1,9 @@
 #ifndef BOOLEAN_H
 #define BOOLEAN_H
 
-typedef enum bool{
+typedef enum BOOL{
   FALSE,
   TRUE
-}bool;
+}BOOL;
 
 #endif

@@ -5,8 +5,9 @@
 #include <string.h>
 #include "block.h"
 #include "field.h"
+#include "boolean.h"
 
-void setup (GROUP*,FIELD*,bool);
+void setup (GROUP*,FIELD*,BOOL);
 
 void Manipulate_mino(void);
 void to_ground_mino(void);
