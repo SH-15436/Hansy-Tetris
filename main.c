@@ -18,5 +18,10 @@ int main(void){
   drop_mino(group, field);
   UpdateCanvas(field);
   PrintField(field);
+  for(debug_loop = 0; debug_loop < 8; debug_loop++){
+    drop_mino_oneline(group, field);
+    UpdateCanvas(field);
+    PrintField(field);
+  }
   return 0;
 }

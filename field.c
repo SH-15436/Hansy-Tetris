@@ -26,27 +26,48 @@ void PrintField (FIELD *field){
 
 int drop_mino(GROUP *group, FIELD *field){
   int loop, buf_field;
-  printf("DROP_MINO()\n");
+  int order_selecter = group -> order_selecter;
+  int order = group -> order[order_selecter];
+  int drop_mino_counter = group -> block[order].drop_counter;
+  const BOOL debug_FLAG = FALSE;
+  if (debug_FLAG){
+    printf("drop_counter %d\n",group -> block[order].drop_counter);
+    printf("ordre = %d\n",order);
+    printf("DROP_MINO()\n");
+  }
   for(loop = 0, buf_field = 0;loop < 4;loop++){
     buf_field <<= 1;
-    buf_field += field -> bit_field[FIELD_TOP + 1][4 + loop] & group -> block[group -> order[group -> order_selecter]].shape[3][loop]; 
+    buf_field += field -> bit_field[drop_mino_counter + FIELD_TOP + 1][4 + loop] & group -> block[order].shape[3][loop];
   }
-  printf("buf_field = %d\n",buf_field);
+  if(debug_FLAG) printf("buf_field = %d\n",buf_field);
   if(buf_field != 0) return 1;
-  memcpy(&(field -> bit_field[FIELD_TOP][3]),&(group -> block[group -> order[group -> order_selecter]].shape[2][0]),sizeof(int)*4);
-  memcpy(&(field -> bit_field[FIELD_TOP + 1][3]),&(group -> block[group -> order[group -> order_selecter]].shape[3][0]), sizeof(int)*4);
-  for(loop = 0;loop < 4;loop++) printf("%d",group -> block[group -> order[group -> order_selecter]].shape[2][loop]);
-  printf("\n");
-  for(loop = 0;loop < 4;loop++) printf("%d",group -> block[group -> order[group -> order_selecter]].shape[3][loop]);
-  printf("\n");
-  for(loop = 0;loop < 10;loop++){
-    printf("%d",field -> bit_field[FIELD_TOP][loop]);
+  memcpy(&(field -> bit_field[drop_mino_counter + FIELD_TOP][3]),&(group -> block[order].shape[2][0]),sizeof(int)*4);
+  memcpy(&(field -> bit_field[drop_mino_counter + FIELD_TOP + 1][3]),&(group -> block[order].shape[3][0]), sizeof(int)*4);
+
+  if(debug_FLAG){
+    for(loop = 0;loop < 4;loop++) printf("%d",group -> block[order].shape[2][loop]);
+    printf("\n");
+    for(loop = 0;loop < 4;loop++) printf("%d",group -> block[order].shape[3][loop]);
+    printf("\n");
+    for(loop = 0;loop < 10;loop++){
+      printf("%d",field -> bit_field[drop_mino_counter + FIELD_TOP][loop]);
+    }
+    printf("\n");
+    for(loop = 0;loop < 10;loop++){
+      printf("%d",field -> bit_field[drop_mino_counter + FIELD_TOP + 1][loop]);
+    }
+    printf("\n");
   }
-  printf("\n");
-  for(loop = 0;loop < 10;loop++){
-    printf("%d",field -> bit_field[FIELD_TOP + 1][loop]);
-  }
-  printf("\n");
   return 0;
 }
 
+
+void delete_line(FIELD* field,int delete_line_map[]){
+  int i,cache;
+  for(i = WIDTH-1,cache = 0;i >= 0;i--){
+    if(delete_line_map[i] == 0){
+      cache++;
+      memcpy(field -> bit_field[i],field -> bit_field[WIDTH - cache],sizeof(field -> bit_field));
+    }
+  }
+}

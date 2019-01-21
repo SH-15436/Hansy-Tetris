@@ -8,6 +8,9 @@
 #include "boolean.h"
 
 #define MAX_MINO 7
+#define BLOCK_WIDTH 4
+#define BLOCK_HEIGHT 2
+#define BLOCK_ROTATE_HIGHT 4
 #define SHUFFLE_NUM 1000
 
 #define HEIGHT 22
@@ -18,17 +21,6 @@ typedef struct MINO{
   int shape[4][4];
   int drop_counter;
 } MINO;
-
-/*
-  bit_field  : ブロックの有無のboolean
-  disp_field : 画面に描画されるフィールド
-  hold       : ホールドしたミノのtype
-*/
-typedef struct FIELD{
-  char disp_field[HEIGHT + 1][WIDTH + 3]; 
-  int bit_field[HEIGHT][WIDTH]; // field[縦幅][横幅]
-  char hold;
-} FIELD;
 
 typedef struct GROUP{
   MINO block[7];
