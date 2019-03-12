@@ -66,5 +66,3 @@ void PrintMino(int mino[4][4]){
     printf("\n");
   }
 }
-  
-

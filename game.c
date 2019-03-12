@@ -61,7 +61,22 @@ void Manipulate_mino(GROUP* group, FIELD* field){
 
 }
 
-BOOL is_ground_mino(GROUP* group,FIELD* field){
+BOOL is_ground_mino(GROUP* group,FIELD* field,int drop_counter){
+  int order = group -> order[group -> order_selecter];
+  int left_move_counter = group -> block[order].left_move_counter;
+  int i,checker;
+  printf("%d\n",HEIGHT - 2);
+  if (drop_counter >= HEIGHT - 2){
+    puts("drop_counter >= HEIGHT");
+    return TRUE;
+  }
+  puts("drop_counter < HEIGHT");
+  for (i = 0,checker = 0;i < 4;i++){
+    checker   += field -> bit_field[drop_counter + 1 + FIELD_TOP][i + 4 - left_move_counter] & group -> block[order].shape[BLOCK_HEIGHT][i];
+    if(drop_counter + 1 + FIELD_TOP < 21)
+      checker += field -> bit_field[drop_counter + 2 + FIELD_TOP][i + 4 - left_move_counter] & group -> block[order].shape[BLOCK_HEIGHT + 1][i];
+  }
+  if(checker != 0) return TRUE;
   return FALSE;
 }
 
@@ -78,7 +93,7 @@ void drop_mino_oneline(GROUP *group,FIELD *field){
   int i;
   int order = group -> order[group -> order_selecter];
   int drop_counter = group -> block[order].drop_counter++;
-  const BOOL debug_FLAG = FALSE;
+  const BOOL debug_FLAG = TRUE;
   if(debug_FLAG){
     printf("-----drop_mino_oneline----------\n");
 
@@ -100,9 +115,15 @@ void drop_mino_oneline(GROUP *group,FIELD *field){
     printf("drop_counter = %d\n",drop_counter);
     printf("order = %d\n",order);
     printf("NEXT_MINO = %d\n",order);
+    if(is_ground_mino(group,field,drop_counter) == TRUE){
+      puts("IS_GLOUND_MINO");
+    }else{
+      puts("NOT_GROUND_MINO");
+    }
+
   }
 
-  if(is_ground_mino(group,field) == FALSE){
+  if(is_ground_mino(group,field,drop_counter) == FALSE){
 
     for(i = 0; i < BLOCK_WIDTH;i++){
       field -> bit_field[drop_counter+FIELD_TOP][i + R_SPACE] \
@@ -111,18 +132,24 @@ void drop_mino_oneline(GROUP *group,FIELD *field){
       ^= group -> block[order].shape[3][i];
     }
 
-    if(debug_FLAG){
+    /*
+    if(FALSE){
       for(i = 0; i < 10;i++){
         printf("%d",field -> bit_field[drop_counter + FIELD_TOP][i]);
       }puts("");
       for(i = 0; i < 10;i++){
         printf("%d",field -> bit_field[drop_counter+1+FIELD_TOP][i]);
       }puts("");
-
       UpdateCanvas(field);
       PrintField(field);
+    }
+    */
+
+    if(debug_FLAG){
       printf("-----drop_mino_oneline_end-----\n");
     }
     drop_mino(group,field);
+  }else{
+    group -> block[order].drop_counter--;
   }
 }

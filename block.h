@@ -20,6 +20,7 @@ typedef struct MINO{
   char type;
   int shape[4][4];
   int drop_counter;
+  int left_move_counter;
 } MINO;
 
 typedef struct GROUP{

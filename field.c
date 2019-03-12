@@ -31,9 +31,9 @@ int drop_mino(GROUP *group, FIELD *field){
   int drop_mino_counter = group -> block[order].drop_counter;
   const BOOL debug_FLAG = FALSE;
   if (debug_FLAG){
-    printf("drop_counter %d\n",group -> block[order].drop_counter);
-    printf("ordre = %d\n",order);
     printf("DROP_MINO()\n");
+    printf("drop_counter %d\n",group -> block[order].drop_counter);
+    printf("order = %d\n",order);
   }
   for(loop = 0, buf_field = 0;loop < 4;loop++){
     buf_field <<= 1;

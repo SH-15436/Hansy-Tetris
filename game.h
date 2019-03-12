@@ -12,7 +12,7 @@
 void setup (GROUP*,FIELD*,BOOL);
 
 void Manipulate_mino(GROUP*, FIELD*);
-void to_ground_mino(GROUP*, FIELD*);
+BOOL is_ground_mino(GROUP*, FIELD*, int);
 void check_line_clear(FIELD*);
 void drop_mino_oneline(GROUP*,FIELD*);
 #endif
